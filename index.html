@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pahang Akuatik MSSM 2026 — Papan Pemuka Prestasi</title>
+<style>
+  :root{
+    --bg:#0b1320;
+    --bg2:#101b2d;
+    --surface:#16233a;
+    --surface2:#1d2e4a;
+    --border:#2a3b5c;
+    --gold:#e8b923;
+    --gold-dim:#a9881c;
+    --teal:#2dd4bf;
+    --text:#eef2f8;
+    --muted:#90a0c0;
+    --good:#15803d;
+    --mid:#eab308;
+    --bad:#dc2626;
+    --font-num: ui-monospace, "SF Mono", "Cascadia Mono", "Roboto Mono", Menlo, Consolas, monospace;
+    --font-disp: "Archivo Narrow", "Arial Narrow", Helvetica, sans-serif;
+    --font-body: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 85% -10%, rgba(45,212,191,0.10), transparent 60%),
+      radial-gradient(900px 500px at 0% 0%, rgba(232,185,35,0.08), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.45;
+    padding-bottom:60px;
+  }
+
+  /* ===== HEADER ===== */
+  header{
+    padding:28px 28px 22px;
+    border-bottom:1px solid var(--border);
+    position:relative;
+    overflow:hidden;
+  }
+  header::before{
+    content:"";
+    position:absolute; inset:0;
+    background: linear-gradient(120deg, rgba(232,185,35,0.10) 0%, transparent 35%);
+    pointer-events:none;
+  }
+  .eyebrow{
+    font-family:var(--font-num);
+    font-size:11px;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    color:var(--teal);
+    font-weight:600;
+  }
+  h1{
+    font-family:var(--font-disp);
+    font-weight:800;
+    font-size:clamp(28px,5vw,46px);
+    letter-spacing:.01em;
+    margin:6px 0 4px;
+    text-transform:uppercase;
+  }
+  h1 .hl{ color:var(--gold); }
+  .subtitle{
+    color:var(--muted);
+    font-size:14px;
+    max-width:760px;
+  }
+  .header-row{
+    display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap;
+  }
+  .print-btn{
+    font-family:var(--font-num);
+    font-size:12px; letter-spacing:.12em; text-transform:uppercase;
+    background:var(--gold); color:#1a1305; border:none;
+    padding:12px 20px; border-radius:6px; cursor:pointer; font-weight:700;
+    white-space:nowrap;
+  }
+  .print-btn:hover{ background:#f4cc3c; }
+
+  /* ===== FILTER BAR ===== */
+  .filters{
+    margin:22px 28px 0;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:16px 18px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:14px;
+  }
+  .filter-group label{
+    display:block;
+    font-family:var(--font-num);
+    font-size:10px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--teal); margin-bottom:6px;
+  }
+  select{
+    width:100%;
+    background:var(--bg2);
+    color:var(--text);
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:9px 10px;
+    font-size:13.5px;
+    font-family:var(--font-body);
+    appearance:none;
+    cursor:pointer;
+  }
+  select:focus{ outline:2px solid var(--gold); }
+
+  .pill-group{ display:flex; gap:6px; flex-wrap:wrap; }
+  .pill{
+    background:var(--bg2); border:1px solid var(--border); color:var(--muted);
+    padding:8px 12px; border-radius:20px; font-size:12.5px; cursor:pointer;
+    font-family:var(--font-num); letter-spacing:.04em;
+    transition:all .12s ease;
+  }
+  .pill.active{ background:var(--gold); color:#1a1305; border-color:var(--gold); font-weight:700; }
+  .pill:hover:not(.active){ border-color:var(--teal); color:var(--text); }
+
+  /* ===== SUMMARY ===== */
+  .summary{
+    margin:20px 28px 0;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:12px;
+  }
+  .stat{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:16px 18px;
+    position:relative;
+    overflow:hidden;
+  }
+  .stat::after{
+    content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--gold);
+  }
+  .stat .num{
+    font-family:var(--font-num); font-weight:700;
+    font-size:30px; font-variant-numeric:tabular-nums;
+    color:var(--text);
+  }
+  .stat .num small{ font-size:14px; color:var(--muted); font-weight:500; }
+  .stat .lbl{
+    font-size:11.5px; color:var(--muted); margin-top:4px;
+    letter-spacing:.04em;
+  }
+  .stat.gold .num{ color:var(--gold); }
+  .stat.teal .num{ color:var(--teal); }
+
+  /* ===== SECTION TITLES ===== */
+  .section{ margin:30px 28px 0; }
+  .section-head{
+    display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;
+    margin-bottom:12px;
+  }
+  .section-head h2{
+    font-family:var(--font-disp); text-transform:uppercase; letter-spacing:.04em;
+    font-size:20px; font-weight:800; margin:0;
+  }
+  .section-head .note{ font-size:12.5px; color:var(--muted); }
+
+  /* ===== LEGEND ===== */
+  .legend{
+    display:flex; align-items:center; gap:8px; font-size:11.5px; color:var(--muted);
+    font-family:var(--font-num);
+  }
+  .legend .bar{
+    width:140px; height:10px; border-radius:4px;
+    background:linear-gradient(90deg, var(--good), var(--mid), var(--bad));
+  }
+
+  /* ===== GRID HEATMAP (stroke x age) ===== */
+  .grid-heatmap{
+    display:grid;
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    background:var(--surface);
+  }
+  .gh-cell{
+    padding:14px 8px;
+    text-align:center;
+    border-right:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    font-family:var(--font-num);
+    font-size:12px;
+    min-height:62px;
+    display:flex; flex-direction:column; justify-content:center; align-items:center; gap:2px;
+  }
+  .gh-cell.head{
+    background:var(--bg2); color:var(--teal); font-weight:700;
+    letter-spacing:.06em; text-transform:uppercase; font-size:11px;
+  }
+  .gh-cell.rowhead{
+    background:var(--bg2); color:var(--gold); font-weight:700;
+    text-transform:uppercase; letter-spacing:.04em; font-size:11.5px;
+    justify-content:center; text-align:right; padding-right:12px;
+  }
+  .gh-cell .pct{ font-size:16px; font-weight:700; }
+  .gh-cell .cnt{ font-size:10px; color:rgba(11,19,32,0.65); }
+  .gh-cell.empty{ color:var(--muted); font-size:11px; }
+
+  /* ===== TABLE ===== */
+  .table-wrap{
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    background:var(--surface);
+  }
+  table{ width:100%; border-collapse:collapse; font-size:13px; }
+  thead th{
+    background:var(--bg2);
+    color:var(--teal);
+    text-transform:uppercase;
+    font-size:10.5px; letter-spacing:.1em;
+    font-family:var(--font-num);
+    text-align:left;
+    padding:11px 10px;
+    border-bottom:1px solid var(--border);
+    white-space:nowrap;
+    position:sticky; top:0;
+  }
+  tbody td{
+    padding:9px 10px;
+    border-bottom:1px solid var(--border);
+    vertical-align:middle;
+  }
+  tbody tr:hover{ background:rgba(45,212,191,0.05); }
+  tbody tr:nth-child(even){ background:rgba(255,255,255,0.015); }
+  .num-cell{ font-family:var(--font-num); font-variant-numeric:tabular-nums; }
+  .day-badge{
+    display:inline-block; background:var(--bg2); border:1px solid var(--border);
+    color:var(--gold); font-family:var(--font-num); font-size:11px;
+    padding:2px 7px; border-radius:4px; font-weight:700;
+  }
+  .rank-badge{
+    display:inline-block; font-family:var(--font-num); font-size:12px;
+    padding:2px 8px; border-radius:4px; font-weight:700;
+    background:var(--bg2); border:1px solid var(--border); color:var(--text);
+  }
+  .rank-badge.podium{ background:var(--gold); color:#1a1305; border-color:var(--gold); }
+  .athlete-name{ font-weight:600; }
+  .event-title{ color:var(--text); }
+  .event-meta{ display:block; font-size:11px; color:var(--muted); margin-top:1px; }
+  .delta-cell{
+    font-family:var(--font-num); font-weight:700; font-variant-numeric:tabular-nums;
+    text-align:center; border-radius:5px; padding:5px 8px; color:#0b1320;
+    min-width:74px; display:inline-block;
+  }
+  .delta-cell.na{ background:var(--bg2); color:var(--muted); font-weight:400; }
+  .delta-sub{ display:block; font-size:10px; opacity:.75; font-weight:600; }
+
+  footer{
+    margin:36px 28px 0; padding-top:18px; border-top:1px solid var(--border);
+    color:var(--muted); font-size:11.5px; font-family:var(--font-num);
+  }
+
+  .empty-state{
+    text-align:center; padding:50px 20px; color:var(--muted);
+  }
+
+  /* ===== MOBILE ===== */
+  @media (max-width: 720px){
+    header{ padding:20px 16px 18px; }
+    .header-row{ flex-direction:column; align-items:stretch; }
+    .print-btn{ width:100%; }
+    .subtitle{ font-size:13px; }
+
+    .filters{
+      margin:16px 14px 0;
+      grid-template-columns:1fr;
+      padding:14px;
+      gap:12px;
+    }
+    .pill-group{
+      flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch;
+      padding-bottom:2px;
+    }
+    .pill{ flex-shrink:0; }
+
+    .summary{
+      margin:14px 14px 0;
+      grid-template-columns:repeat(2,1fr);
+    }
+    .stat{ padding:12px 14px; }
+    .stat .num{ font-size:24px; }
+
+    .section{ margin:22px 14px 0; }
+    .section-head{ flex-direction:column; align-items:flex-start; gap:6px; }
+    .section-head .legend{ margin-left:0 !important; }
+
+    /* heatmap: horizontal scroll, sticky row labels */
+    .grid-heatmap-scroll{
+      overflow-x:auto; -webkit-overflow-scrolling:touch;
+      border-radius:10px; border:1px solid var(--border);
+    }
+    .grid-heatmap{
+      border:none; border-radius:0;
+      min-width:560px;
+    }
+    .gh-cell.rowhead{
+      position:sticky; left:0; z-index:2;
+    }
+
+    /* ===== CARD-STYLE TABLE ===== */
+    .table-wrap{ border:none; background:transparent; overflow:visible; }
+    table{ font-size:13px; }
+    thead{ display:none; }
+    tbody{ display:block; }
+    tr{
+      display:block;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:10px;
+      padding:4px 14px;
+      margin-bottom:10px;
+    }
+    tr:nth-child(even){ background:var(--surface); }
+    td{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      padding:9px 0;
+      border-bottom:1px solid var(--border);
+      text-align:right;
+    }
+    td:last-child{ border-bottom:none; }
+    td::before{
+      content:attr(data-label);
+      font-family:var(--font-num);
+      font-size:10px; letter-spacing:.1em; text-transform:uppercase;
+      color:var(--teal); text-align:left; flex-shrink:0;
+    }
+    td.cell-event{ flex-direction:column; align-items:flex-start; text-align:left; gap:4px; }
+    td.cell-event::before{ margin-bottom:2px; }
+    .event-meta{ margin-top:0; }
+    .empty-state{ background:var(--surface); border:1px solid var(--border); border-radius:10px; }
+  }
+
+  /* ===== PRINT ===== */
+  @media print{
+    body{ background:#fff !important; color:#111; padding:0; }
+    body::before{ display:none; }
+    header::before{ display:none; }
+    .filters{ display:none !important; }
+    .print-btn{ display:none !important; }
+    .summary{ margin:14px 16px 0; }
+    .section{ margin:18px 16px 0; }
+    .stat{ background:#f4f4f4; border-color:#ccc; }
+    .stat .num, .stat.gold .num, .stat.teal .num{ color:#111; }
+    .stat::after{ background:#999; }
+    .table-wrap, .grid-heatmap{ border-color:#ccc; background:#fff; }
+    thead th{ background:#eee; color:#333; position:static; }
+    tbody td{ border-color:#ddd; color:#111; }
+    tbody tr:nth-child(even){ background:#fafafa; }
+    .rank-badge, .day-badge{ border-color:#bbb; color:#222; background:#f0f0f0; }
+    .rank-badge.podium{ background:#e8b923; color:#111; }
+    .delta-cell{ -webkit-print-color-adjust:exact; print-color-adjust:exact; color:#111 !important; }
+    .gh-cell{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    .legend .bar{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    .eyebrow{ color:#0a8a7a; }
+    h1 .hl{ color:#b8860b; }
+    table{ font-size:11px; }
+    tr{ break-inside:avoid; }
+    .section{ break-inside:avoid; }
+    .header-row{ align-items:flex-start; }
+
+    /* override mobile card layout for print */
+    table, thead, tbody, tr, td, th{ display:revert !important; }
+    thead{ display:table-header-group !important; }
+    tr{ background:#fff !important; border:none !important; margin-bottom:0 !important; padding:0 !important; }
+    td{ display:table-cell !important; text-align:left !important; }
+    td::before{ content:none !important; }
+    td.cell-event{ flex-direction:row !important; }
+    .grid-heatmap-scroll{ overflow:visible !important; }
+    .grid-heatmap{ min-width:0 !important; border:1px solid #ccc !important; }
+    .gh-cell.rowhead{ position:static !important; }
+    .table-wrap{ border:1px solid #ccc !important; background:#fff !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-row">
+    <div>
+      <div class="eyebrow">Kejohanan Akuatik MSSM Ke-58 &middot; 2026</div>
+      <h1>Pasukan <span class="hl">Pahang</span> &mdash; Analisis Beza Masa</h1>
+      <div class="subtitle">
+        Perbandingan masa atlet Pahang berbanding juara acara (No.1) dan rekod MSSM,
+        merentas Hari 1&ndash;5. Gunakan penapis di bawah untuk menyaring mengikut
+        hari, jantina, kumpulan umur, jenis acara dan kedudukan.
+      </div>
+    </div>
+    <button class="print-btn" onclick="window.print()">Cetak / Simpan PDF</button>
+  </div>
+</header>
+
+<div class="filters">
+  <div class="filter-group">
+    <label>Hari</label>
+    <select id="f-day">
+      <option value="all">Semua Hari</option>
+      <option value="1">Hari 1</option>
+      <option value="2">Hari 2</option>
+      <option value="3">Hari 3</option>
+      <option value="4">Hari 4</option>
+      <option value="5">Hari 5</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <label>Jantina</label>
+    <select id="f-gender">
+      <option value="all">Semua</option>
+      <option value="Girls">Perempuan</option>
+      <option value="Boys">Lelaki</option>
+      <option value="Mixed">Campuran (Relay)</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <label>Kumpulan Umur</label>
+    <select id="f-age">
+      <option value="all">Semua</option>
+      <option value="7-12">7-12</option>
+      <option value="13-15">13-15</option>
+      <option value="16-18">16-18</option>
+      <option value="Open">Open</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <label>Jenis Acara</label>
+    <select id="f-stroke">
+      <option value="all">Semua</option>
+      <option value="Freestyle">Gaya Bebas</option>
+      <option value="Backstroke">Gaya Belakang</option>
+      <option value="Breaststroke">Gaya Dada</option>
+      <option value="Butterfly">Gaya Kupu-kupu</option>
+      <option value="IM">Individu Medley</option>
+      <option value="Medley">Medley Relay</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <label>Atlet</label>
+    <select id="f-name">
+      <option value="all">Semua Atlet</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <label>Kedudukan Pahang</label>
+    <div class="pill-group" id="f-rank">
+      <div class="pill active" data-val="all">Semua</div>
+      <div class="pill" data-val="3">Top 3</div>
+      <div class="pill" data-val="10">Top 10</div>
+      <div class="pill" data-val="16">Top 16</div>
+    </div>
+  </div>
+  <div class="filter-group">
+    <label>Beza Masa Berbanding</label>
+    <div class="pill-group" id="f-basis">
+      <div class="pill active" data-val="rank1">Juara (No.1)</div>
+      <div class="pill" data-val="mssm">Rekod MSSM</div>
+      <div class="pill" data-val="both">Kedua-dua</div>
+    </div>
+  </div>
+</div>
+
+<div class="summary" id="summary"></div>
+
+<div class="section">
+  <div class="section-head">
+    <h2>Heatmap &mdash; Gaya × Kumpulan Umur</h2>
+    <div class="note">Purata peratus beza masa Pahang berbanding juara acara, mengikut gaya dan kumpulan umur (berdasarkan acara yang ditapis)</div>
+    <div class="legend" style="margin-left:auto">
+      <span>Hampir juara</span><div class="bar"></div><span>Jauh dari juara</span>
+    </div>
+  </div>
+  <div class="grid-heatmap-scroll">
+    <div class="grid-heatmap" id="grid-heatmap"></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-head">
+    <h2>Senarai Acara &amp; Beza Masa</h2>
+    <div class="note" id="table-note"></div>
+  </div>
+  <div class="table-wrap">
+    <table id="main-table">
+      <thead>
+        <tr id="table-head"></tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<footer>
+  Sumber: Keputusan rasmi MSSM Akuatik Ke-58 2026 (Hari 1&ndash;5). Acara relay Hari 5 ditiadakan daripada
+  set data ini disebabkan kualiti dokumen sumber. "Beza Masa" = masa atlet Pahang &minus; masa rujukan (juara/rekod MSSM); nilai positif bermaksud lebih perlahan.
+</footer>
+
+<script id="pahang-data" type="application/json">
+[{"day":1,"event_no":101,"title":"Girls 7-12 100m Backstroke","gender":"Girls","age_group":"7-12","stroke":"Backstroke","distance":"100","is_relay":false,"name":"Ngien Faith YU Hong","age":"10","rank":"23","rank_num":23,"time":"1:34.55","time_sec":94.55,"total_participants":26,"rank1_name":"Lai Wen AN","rank1_team":"MLK","rank1_time":"1:09.55R","rank1_sec":69.55,"mssm_record":"1:09.68","mssm_sec":69.68,"delta_rank1":25.0,"delta_mssm":24.86999999999999},{"day":1,"event_no":101,"title":"Girls 7-12 100m Backstroke","gender":"Girls","age_group":"7-12","stroke":"Backstroke","distance":"100","is_relay":false,"name":"Liew Zhi Jing","age":"12","rank":"25","rank_num":25,"time":"1:42.19","time_sec":102.19,"total_participants":26,"rank1_name":"Lai Wen AN","rank1_team":"MLK","rank1_time":"1:09.55R","rank1_sec":69.55,"mssm_record":"1:09.68","mssm_sec":69.68,"delta_rank1":32.64,"delta_mssm":32.50999999999999},{"day":1,"event_no":102,"title":"Boys 7-12 100m Backstroke","gender":"Boys","age_group":"7-12","stroke":"Backstroke","distance":"100","is_relay":false,"name":"Yam Chun Hei","age":"12","rank":"23","rank_num":23,"time":"1:28.56","time_sec":88.56,"total_participants":24,"rank1_name":"Keeton Henri James Johan","rank1_team":"WPKL","rank1_time":"1:11.52","rank1_sec":71.52,"mssm_record":"1:07.07","mssm_sec":67.07,"delta_rank1":17.040000000000006,"delta_mssm":21.49000000000001},{"day":1,"event_no":102,"title":"Boys 7-12 100m Backstroke","gender":"Boys","age_group":"7-12","stroke":"Backstroke","distance":"100","is_relay":false,"name":"John TI Chun Yang","age":"12","rank":"24","rank_num":24,"time":"1:32.87","time_sec":92.87,"total_participants":24,"rank1_name":"Keeton Henri James Johan","rank1_team":"WPKL","rank1_time":"1:11.52","rank1_sec":71.52,"mssm_record":"1:07.07","mssm_sec":67.07,"delta_rank1":21.35000000000001,"delta_mssm":25.80000000000001},{"day":1,"event_no":103,"title":"Girls 13-15 100m Backstroke","gender":"Girls","age_group":"13-15","stroke":"Backstroke","distance":"100","is_relay":false,"name":"Shuen Airis Heng KE","age":"13","rank":"22","rank_num":22,"time":"1:24.93","time_sec":84.93,"total_participants":25,"rank1_name":"Vivian Tee Xin Ling","rank1_team":"PNG","rank1_time":"1:07.74","rank1_sec":67.74,"mssm_record":"1:05.89","mssm_sec":65.89,"delta_rank1":17.190000000000012,"delta_mssm":19.040000000000006},{"day":1,"event_no":103,"title":"Girls 13-15 100m Backstroke","gender":"Girls","age_group":"13-15","stroke":"Backstroke","distance":"100","is_relay":false,"name":"Tan KE Qing","age":"13","rank":"24","rank_num":24,"time":"1:26.16","time_sec":86.16,"total_participants":25,"rank1_name":"Vivian Tee Xin Ling","rank1_team":"PNG","rank1_time":"1:07.74","rank1_sec":67.74,"mssm_record":"1:05.89","mssm_sec":65.89,"delta_rank1":18.42,"delta_mssm":20.269999999999996},{"day":1,"event_no":104,"title":"Boys 13-15 100m Backstroke","gender":"Boys","age_group":"13-15","stroke":"Backstroke","distance":"100","is_relay":false,"name":"Wong Jun Hao","age":"14","rank":"14","rank_num":14,"time":"1:08.68","time_sec":68.68,"total_participants":27,"rank1_name":"Edwin Loke EU Zhe","rank1_team":"KDH","rank1_time":"1:01.78","rank1_sec":61.78,"mssm_record":"1:00.25","mssm_sec":60.25,"delta_rank1":6.900000000000006,"delta_mssm":8.430000000000007},{"day":1,"event_no":104,"title":"Boys 13-15 100m Backstroke","gender":"Boys","age_group":"13-15","stroke":"Backstroke","distance":"100","is_relay":false,"name":"Shahrul Nizam Adam","age":"14","rank":"24","rank_num":24,"time":"1:16.46","time_sec":76.46000000000001,"total_participants":27,"rank1_name":"Edwin Loke EU Zhe","rank1_team":"KDH","rank1_time":"1:01.78","rank1_sec":61.78,"mssm_record":"1:00.25","mssm_sec":60.25,"delta_rank1":14.680000000000007,"delta_mssm":16.210000000000008},{"day":1,"event_no":105,"title":"Girls 16-18 100m Backstroke","gender":"Girls","age_group":"16-18","stroke":"Backstroke","distance":"100","is_relay":false,"name":"Tan Zhen Qing","age":"16","rank":"19","rank_num":19,"time":"1:31.06","time_sec":91.06,"total_participants":21,"rank1_name":"Shanise Jauwa Anak Joseline Adon","rank1_team":"SWK","rank1_time":"1:08.84","rank1_sec":68.84,"mssm_record":"1:05.12","mssm_sec":65.12,"delta_rank1":22.22,"delta_mssm":25.939999999999998},{"day":1,"event_no":105,"title":"Girls 16-18 100m Backstroke","gender":"Girls","age_group":"16-18","stroke":"Backstroke","distance":"100","is_relay":false,"name":"Chin Heng YI","age":"16","rank":"20","rank_num":20,"time":"1:32.81","time_sec":92.81,"total_participants":21,"rank1_name":"Shanise Jauwa Anak Joseline Adon","rank1_team":"SWK","rank1_time":"1:08.84","rank1_sec":68.84,"mssm_record":"1:05.12","mssm_sec":65.12,"delta_rank1":23.97,"delta_mssm":27.689999999999998},{"day":1,"event_no":106,"title":"Boys 16-18 100m Backstroke","gender":"Boys","age_group":"16-18","stroke":"Backstroke","distance":"100","is_relay":false,"name":"Muhammad Azim Hakeem Hasbu","age":"16","rank":"3","rank_num":3,"time":"1:03.00","time_sec":63.0,"total_participants":21,"rank1_name":"Khew MU Han","rank1_team":"SGR","rank1_time":"1:01.33","rank1_sec":61.33,"mssm_record":"58.53","mssm_sec":58.53,"delta_rank1":1.6700000000000017,"delta_mssm":4.469999999999999},{"day":1,"event_no":106,"title":"Boys 16-18 100m Backstroke","gender":"Boys","age_group":"16-18","stroke":"Backstroke","distance":"100","is_relay":false,"name":"Kuan Kai Jun","age":"16","rank":"15","rank_num":15,"time":"1:09.03","time_sec":69.03,"total_participants":21,"rank1_name":"Khew MU Han","rank1_team":"SGR","rank1_time":"1:01.33","rank1_sec":61.33,"mssm_record":"58.53","mssm_sec":58.53,"delta_rank1":7.700000000000003,"delta_mssm":10.5},{"day":1,"event_no":107,"title":"Girls 7-12 50m Butterfly","gender":"Girls","age_group":"7-12","stroke":"Butterfly","distance":"50","is_relay":false,"name":"Ngien Faith YU Hong","age":"10","rank":"---","rank_num":null,"time":"NS","time_sec":null,"total_participants":26,"rank1_name":"Lai Wen AN","rank1_team":"MLK","rank1_time":"29.92R","rank1_sec":29.92,"mssm_record":"30.56","mssm_sec":30.56,"delta_rank1":null,"delta_mssm":null},{"day":1,"event_no":108,"title":"Boys 7-12 50m Butterfly","gender":"Boys","age_group":"7-12","stroke":"Butterfly","distance":"50","is_relay":false,"name":"Chin Kok Jun","age":"12","rank":"23","rank_num":23,"time":"36.05","time_sec":36.05,"total_participants":31,"rank1_name":"Edryiey Lee Juen Wey","rank1_team":"NSE","rank1_time":"28.49","rank1_sec":28.49,"mssm_record":"27.40","mssm_sec":27.4,"delta_rank1":7.559999999999999,"delta_mssm":8.649999999999999},{"day":1,"event_no":108,"title":"Boys 7-12 50m Butterfly","gender":"Boys","age_group":"7-12","stroke":"Butterfly","distance":"50","is_relay":false,"name":"John TI Chun Yang","age":"12","rank":"29","rank_num":29,"time":"44.49","time_sec":44.49,"total_participants":31,"rank1_name":"Edryiey Lee Juen Wey","rank1_team":"NSE","rank1_time":"28.49","rank1_sec":28.49,"mssm_record":"27.40","mssm_sec":27.4,"delta_rank1":16.000000000000004,"delta_mssm":17.090000000000003},{"day":1,"event_no":110,"title":"Boys 13-15 50m Butterfly","gender":"Boys","age_group":"13-15","stroke":"Butterfly","distance":"50","is_relay":false,"name":"Lau Ber Lin","age":"15","rank":"23","rank_num":23,"time":"30.16","time_sec":30.16,"total_participants":30,"rank1_name":"Damian Seth Lim","rank1_team":"SGR","rank1_time":"26.97","rank1_sec":26.97,"mssm_record":"26.18","mssm_sec":26.18,"delta_rank1":3.1900000000000013,"delta_mssm":3.9800000000000004},{"day":1,"event_no":110,"title":"Boys 13-15 50m Butterfly","gender":"Boys","age_group":"13-15","stroke":"Butterfly","distance":"50","is_relay":false,"name":"Abdul Khadir I Muhammad Hadi","age":"15","rank":"26","rank_num":26,"time":"30.81","time_sec":30.81,"total_participants":30,"rank1_name":"Damian Seth Lim","rank1_team":"SGR","rank1_time":"26.97","rank1_sec":26.97,"mssm_record":"26.18","mssm_sec":26.18,"delta_rank1":3.84,"delta_mssm":4.629999999999999},{"day":1,"event_no":111,"title":"Girls 16-18 50m Butterfly","gender":"Girls","age_group":"16-18","stroke":"Butterfly","distance":"50","is_relay":false,"name":"Chin Heng YI","age":"16","rank":"17","rank_num":17,"time":"38.03","time_sec":38.03,"total_participants":21,"rank1_name":"Tan Zen YI","rank1_team":"PNG","rank1_time":"29.56","rank1_sec":29.56,"mssm_record":"28.47","mssm_sec":28.47,"delta_rank1":8.470000000000002,"delta_mssm":9.560000000000002},{"day":1,"event_no":111,"title":"Girls 16-18 50m Butterfly","gender":"Girls","age_group":"16-18","stroke":"Butterfly","distance":"50","is_relay":false,"name":"Salman Sascha","age":"16","rank":"18","rank_num":18,"time":"38.61","time_sec":38.61,"total_participants":21,"rank1_name":"Tan Zen YI","rank1_team":"PNG","rank1_time":"29.56","rank1_sec":29.56,"mssm_record":"28.47","mssm_sec":28.47,"delta_rank1":9.05,"delta_mssm":10.14},{"day":1,"event_no":112,"title":"Boys 16-18 50m Butterfly","gender":"Boys","age_group":"16-18","stroke":"Butterfly","distance":"50","is_relay":false,"name":"Wong Jing Lin","age":"16","rank":"21","rank_num":21,"time":"30.26","time_sec":30.26,"total_participants":26,"rank1_name":"Yoong Kee Kean","rank1_team":"SGR","rank1_time":"26.33","rank1_sec":26.33,"mssm_record":"25.42","mssm_sec":25.42,"delta_rank1":3.9300000000000033,"delta_mssm":4.84},{"day":1,"event_no":112,"title":"Boys 16-18 50m Butterfly","gender":"Boys","age_group":"16-18","stroke":"Butterfly","distance":"50","is_relay":false,"name":"NG Bing Hao","age":"16","rank":"22","rank_num":22,"time":"30.64","time_sec":30.64,"total_participants":26,"rank1_name":"Yoong Kee Kean","rank1_team":"SGR","rank1_time":"26.33","rank1_sec":26.33,"mssm_record":"25.42","mssm_sec":25.42,"delta_rank1":4.310000000000002,"delta_mssm":5.219999999999999},{"day":1,"event_no":113,"title":"Girls 7-12 200m Freestyle","gender":"Girls","age_group":"7-12","stroke":"Freestyle","distance":"200","is_relay":false,"name":"Liew Zhi Jing","age":"12","rank":"22","rank_num":22,"time":"3:07.02","time_sec":187.02,"total_participants":22,"rank1_name":"Lai Wen AN","rank1_team":"MLK","rank1_time":"2:16.59","rank1_sec":136.59,"mssm_record":"2:13.69","mssm_sec":133.69,"delta_rank1":50.43000000000001,"delta_mssm":53.33000000000001},{"day":1,"event_no":114,"title":"Boys 7-12 200m Freestyle","gender":"Boys","age_group":"7-12","stroke":"Freestyle","distance":"200","is_relay":false,"name":"Chin Kok Jun","age":"12","rank":"17","rank_num":17,"time":"2:32.33","time_sec":152.32999999999998,"total_participants":25,"rank1_name":"Javier Yeoh YU Chen","rank1_team":"PNG","rank1_time":"2:13.80","rank1_sec":133.8,"mssm_record":"2:11.21","mssm_sec":131.21,"delta_rank1":18.529999999999973,"delta_mssm":21.119999999999976},{"day":1,"event_no":114,"title":"Boys 7-12 200m Freestyle","gender":"Boys","age_group":"7-12","stroke":"Freestyle","distance":"200","is_relay":false,"name":"Yam Chun Hei","age":"12","rank":"24","rank_num":24,"time":"2:56.72","time_sec":176.72,"total_participants":25,"rank1_name":"Javier Yeoh YU Chen","rank1_team":"PNG","rank1_time":"2:13.80","rank1_sec":133.8,"mssm_record":"2:11.21","mssm_sec":131.21,"delta_rank1":42.91999999999999,"delta_mssm":45.50999999999999},{"day":1,"event_no":115,"title":"Girls 13-15 200m Freestyle","gender":"Girls","age_group":"13-15","stroke":"Freestyle","distance":"200","is_relay":false,"name":"Shuen Dioris Heng Hui","age":"14","rank":"18","rank_num":18,"time":"2:39.77","time_sec":159.77,"total_participants":22,"rank1_name":"Tan Rui Nee","rank1_team":"PNG","rank1_time":"2:11.50","rank1_sec":131.5,"mssm_record":"2:08.81","mssm_sec":128.81,"delta_rank1":28.27000000000001,"delta_mssm":30.960000000000008},{"day":1,"event_no":115,"title":"Girls 13-15 200m Freestyle","gender":"Girls","age_group":"13-15","stroke":"Freestyle","distance":"200","is_relay":false,"name":"Salman Safiyya","age":"14","rank":"19","rank_num":19,"time":"2:42.04","time_sec":162.04,"total_participants":22,"rank1_name":"Tan Rui Nee","rank1_team":"PNG","rank1_time":"2:11.50","rank1_sec":131.5,"mssm_record":"2:08.81","mssm_sec":128.81,"delta_rank1":30.539999999999992,"delta_mssm":33.22999999999999},{"day":1,"event_no":116,"title":"Boys 13-15 200m Freestyle","gender":"Boys","age_group":"13-15","stroke":"Freestyle","distance":"200","is_relay":false,"name":"NG Zong Heng","age":"15","rank":"21","rank_num":21,"time":"2:18.38","time_sec":138.38,"total_participants":25,"rank1_name":"Hermann Tang Bok YU","rank1_team":"SGR","rank1_time":"1:59.83","rank1_sec":119.83,"mssm_record":"1:55.89","mssm_sec":115.89,"delta_rank1":18.549999999999997,"delta_mssm":22.489999999999995},{"day":1,"event_no":116,"title":"Boys 13-15 200m Freestyle","gender":"Boys","age_group":"13-15","stroke":"Freestyle","distance":"200","is_relay":false,"name":"Shahrul Nizam Adam","age":"14","rank":"24","rank_num":24,"time":"2:21.51","time_sec":141.51,"total_participants":25,"rank1_name":"Hermann Tang Bok YU","rank1_team":"SGR","rank1_time":"1:59.83","rank1_sec":119.83,"mssm_record":"1:55.89","mssm_sec":115.89,"delta_rank1":21.679999999999993,"delta_mssm":25.61999999999999},{"day":1,"event_no":117,"title":"Girls 16-18 200m Freestyle","gender":"Girls","age_group":"16-18","stroke":"Freestyle","distance":"200","is_relay":false,"name":"Salman Sascha","age":"16","rank":"13","rank_num":13,"time":"2:59.09","time_sec":179.09,"total_participants":13,"rank1_name":"Khoo Sue Enn","rank1_team":"SGR","rank1_time":"2:14.03","rank1_sec":134.03,"mssm_record":"2:09.22","mssm_sec":129.22,"delta_rank1":45.06,"delta_mssm":49.870000000000005},{"day":1,"event_no":118,"title":"Boys 16-18 200m Freestyle","gender":"Boys","age_group":"16-18","stroke":"Freestyle","distance":"200","is_relay":false,"name":"Kuan Kai Jun","age":"16","rank":"19","rank_num":19,"time":"2:17.33","time_sec":137.32999999999998,"total_participants":22,"rank1_name":"Loo Cheng Feng","rank1_team":"PNG","rank1_time":"1:55.47","rank1_sec":115.47,"mssm_record":"1:51.77","mssm_sec":111.77000000000001,"delta_rank1":21.859999999999985,"delta_mssm":25.559999999999974},{"day":1,"event_no":118,"title":"Boys 16-18 200m Freestyle","gender":"Boys","age_group":"16-18","stroke":"Freestyle","distance":"200","is_relay":false,"name":"NG Bing Hao","age":"16","rank":"20","rank_num":20,"time":"2:20.37","time_sec":140.37,"total_participants":22,"rank1_name":"Loo Cheng Feng","rank1_team":"PNG","rank1_time":"1:55.47","rank1_sec":115.47,"mssm_record":"1:51.77","mssm_sec":111.77000000000001,"delta_rank1":24.900000000000006,"delta_mssm":28.599999999999994},{"day":1,"event_no":119,"title":"Girls 7-12 50m Breaststroke","gender":"Girls","age_group":"7-12","stroke":"Breaststroke","distance":"50","is_relay":false,"name":"Radin Mohd Fairul B Puteri Arabe","age":"12","rank":"21","rank_num":21,"time":"47.21","time_sec":47.21,"total_participants":23,"rank1_name":"NG XI EN","rank1_team":"JHR","rank1_time":"35.44R","rank1_sec":35.44,"mssm_record":"36.00","mssm_sec":36.0,"delta_rank1":11.770000000000003,"delta_mssm":11.21},{"day":1,"event_no":120,"title":"Boys 7-12 50m Breaststroke","gender":"Boys","age_group":"7-12","stroke":"Breaststroke","distance":"50","is_relay":false,"name":"Tan Liang YU","age":"11","rank":"20","rank_num":20,"time":"41.93","time_sec":41.93,"total_participants":30,"rank1_name":"Simpson Wong Zheng Hang","rank1_team":"SWK","rank1_time":"33.73","rank1_sec":33.73,"mssm_record":"33.03","mssm_sec":33.03,"delta_rank1":8.200000000000003,"delta_mssm":8.899999999999999},{"day":1,"event_no":120,"title":"Boys 7-12 50m Breaststroke","gender":"Boys","age_group":"7-12","stroke":"Breaststroke","distance":"50","is_relay":false,"name":"John TI Chun Yang","age":"12","rank":"23","rank_num":23,"time":"43.39","time_sec":43.39,"total_participants":30,"rank1_name":"Simpson Wong Zheng Hang","rank1_team":"SWK","rank1_time":"33.73","rank1_sec":33.73,"mssm_record":"33.03","mssm_sec":33.03,"delta_rank1":9.660000000000004,"delta_mssm":10.36},{"day":1,"event_no":122,"title":"Boys 13-15 50m Breaststroke","gender":"Boys","age_group":"13-15","stroke":"Breaststroke","distance":"50","is_relay":false,"name":"Wong Jun Hao","age":"14","rank":"---","rank_num":null,"time":"NS","time_sec":null,"total_participants":28,"rank1_name":"M. Ziyad Bin M. Qiyam","rank1_team":"NSE","rank1_time":"31.34","rank1_sec":31.34,"mssm_record":"30.34","mssm_sec":30.34,"delta_rank1":null,"delta_mssm":null},{"day":1,"event_no":123,"title":"Girls 16-18 50m Breaststroke","gender":"Girls","age_group":"16-18","stroke":"Breaststroke","distance":"50","is_relay":false,"name":"Tan Zhen Qing","age":"16","rank":"19","rank_num":19,"time":"41.72","time_sec":41.72,"total_participants":23,"rank1_name":"Tan Zen YI","rank1_team":"PNG","rank1_time":"34.35","rank1_sec":34.35,"mssm_record":"32.86","mssm_sec":32.86,"delta_rank1":7.369999999999997,"delta_mssm":8.86},{"day":1,"event_no":123,"title":"Girls 16-18 50m Breaststroke","gender":"Girls","age_group":"16-18","stroke":"Breaststroke","distance":"50","is_relay":false,"name":"Teh Kai Ling","age":"17","rank":"22","rank_num":22,"time":"50.73","time_sec":50.73,"total_participants":23,"rank1_name":"Tan Zen YI","rank1_team":"PNG","rank1_time":"34.35","rank1_sec":34.35,"mssm_record":"32.86","mssm_sec":32.86,"delta_rank1":16.379999999999995,"delta_mssm":17.869999999999997},{"day":1,"event_no":124,"title":"Boys 16-18 50m Breaststroke","gender":"Boys","age_group":"16-18","stroke":"Breaststroke","distance":"50","is_relay":false,"name":"Wong Jing Lin","age":"16","rank":"20","rank_num":20,"time":"33.31","time_sec":33.31,"total_participants":28,"rank1_name":"Ryan Liaw Chee Heng","rank1_team":"SWK","rank1_time":"30.23","rank1_sec":30.23,"mssm_record":"29.71","mssm_sec":29.71,"delta_rank1":3.080000000000002,"delta_mssm":3.6000000000000014},{"day":1,"event_no":124,"title":"Boys 16-18 50m Breaststroke","gender":"Boys","age_group":"16-18","stroke":"Breaststroke","distance":"50","is_relay":false,"name":"Kuan Kai Jun","age":"16","rank":"22","rank_num":22,"time":"34.13","time_sec":34.13,"total_participants":28,"rank1_name":"Ryan Liaw Chee Heng","rank1_team":"SWK","rank1_time":"30.23","rank1_sec":30.23,"mssm_record":"29.71","mssm_sec":29.71,"delta_rank1":3.900000000000002,"delta_mssm":4.420000000000002},{"day":2,"event_no":202,"title":"Boys Open 800m Freestyle","gender":"Boys","age_group":"Open","stroke":"Freestyle","distance":"800","is_relay":false,"name":"NG Zong Heng","age":"15","rank":"17","rank_num":17,"time":"10:02.98","time_sec":602.98,"total_participants":20,"rank1_name":"Hermann Tang Bok YU","rank1_team":"SGR","rank1_time":"8:46.85","rank1_sec":526.85,"mssm_record":"8:27.29","mssm_sec":507.29,"delta_rank1":76.13,"delta_mssm":95.69},{"day":2,"event_no":203,"title":"Girls 7-12 100m Breaststroke","gender":"Girls","age_group":"7-12","stroke":"Breaststroke","distance":"100","is_relay":false,"name":"Radin Mohd Fairul B Puteri Arabe","age":"12","rank":"20","rank_num":20,"time":"1:41.07","time_sec":101.07,"total_participants":24,"rank1_name":"Lai Wen AN","rank1_team":"MLK","rank1_time":"1:16.98R","rank1_sec":76.98,"mssm_record":"1:17.06","mssm_sec":77.06,"delta_rank1":24.08999999999999,"delta_mssm":24.00999999999999},{"day":2,"event_no":204,"title":"Boys 7-12 100m Breaststroke","gender":"Boys","age_group":"7-12","stroke":"Breaststroke","distance":"100","is_relay":false,"name":"Tan Liang YU","age":"11","rank":"21","rank_num":21,"time":"1:31.60","time_sec":91.6,"total_participants":30,"rank1_name":"Simpson Wong Zheng Hang","rank1_team":"SWK","rank1_time":"1:13.34","rank1_sec":73.34,"mssm_record":"1:11.54","mssm_sec":71.53999999999999,"delta_rank1":18.25999999999999,"delta_mssm":20.060000000000002},{"day":2,"event_no":204,"title":"Boys 7-12 100m Breaststroke","gender":"Boys","age_group":"7-12","stroke":"Breaststroke","distance":"100","is_relay":false,"name":"John TI Chun Yang","age":"12","rank":"25","rank_num":25,"time":"1:36.63","time_sec":96.63,"total_participants":30,"rank1_name":"Simpson Wong Zheng Hang","rank1_team":"SWK","rank1_time":"1:13.34","rank1_sec":73.34,"mssm_record":"1:11.54","mssm_sec":71.53999999999999,"delta_rank1":23.289999999999992,"delta_mssm":25.090000000000003},{"day":2,"event_no":205,"title":"Girls 13-15 100m Breaststroke","gender":"Girls","age_group":"13-15","stroke":"Breaststroke","distance":"100","is_relay":false,"name":"Shuen Dioris Heng Hui","age":"14","rank":"17","rank_num":17,"time":"1:33.74","time_sec":93.74000000000001,"total_participants":23,"rank1_name":"Kathryn Leong Ruo Lin","rank1_team":"PNG","rank1_time":"1:16.32","rank1_sec":76.32,"mssm_record":"1:12.47","mssm_sec":72.47,"delta_rank1":17.420000000000016,"delta_mssm":21.27000000000001},{"day":2,"event_no":206,"title":"Boys 13-15 100m Breaststroke","gender":"Boys","age_group":"13-15","stroke":"Breaststroke","distance":"100","is_relay":false,"name":"Lau Ber Lin","age":"15","rank":"23","rank_num":23,"time":"1:20.88","time_sec":80.88,"total_participants":28,"rank1_name":"Ethan Tan Kheng Hong","rank1_team":"SWK","rank1_time":"1:08.23","rank1_sec":68.23,"mssm_record":"1:07.24","mssm_sec":67.24,"delta_rank1":12.649999999999991,"delta_mssm":13.64},{"day":2,"event_no":207,"title":"Girls 16-18 100m Breaststroke","gender":"Girls","age_group":"16-18","stroke":"Breaststroke","distance":"100","is_relay":false,"name":"Tan Zhen Qing","age":"16","rank":"14","rank_num":14,"time":"1:33.82","time_sec":93.82,"total_participants":19,"rank1_name":"Buckley Isabelle Chiyi","rank1_team":"WPKL","rank1_time":"1:13.63","rank1_sec":73.63,"mssm_record":"1:11.58","mssm_sec":71.58,"delta_rank1":20.189999999999998,"delta_mssm":22.239999999999995},{"day":2,"event_no":207,"title":"Girls 16-18 100m Breaststroke","gender":"Girls","age_group":"16-18","stroke":"Breaststroke","distance":"100","is_relay":false,"name":"Teh Kai Ling","age":"17","rank":"18","rank_num":18,"time":"1:55.02","time_sec":115.02000000000001,"total_participants":19,"rank1_name":"Buckley Isabelle Chiyi","rank1_team":"WPKL","rank1_time":"1:13.63","rank1_sec":73.63,"mssm_record":"1:11.58","mssm_sec":71.58,"delta_rank1":41.390000000000015,"delta_mssm":43.44000000000001},{"day":2,"event_no":208,"title":"Boys 16-18 100m Breaststroke","gender":"Boys","age_group":"16-18","stroke":"Breaststroke","distance":"100","is_relay":false,"name":"Wong Jing Lin","age":"16","rank":"15","rank_num":15,"time":"1:14.01","time_sec":74.01,"total_participants":22,"rank1_name":"Brandon Yeoh Hsien Kai","rank1_team":"MLK","rank1_time":"1:05.98","rank1_sec":65.98,"mssm_record":"1:04.94","mssm_sec":64.94,"delta_rank1":8.030000000000001,"delta_mssm":9.070000000000007},{"day":2,"event_no":209,"title":"Girls 13-15 200m Backstroke","gender":"Girls","age_group":"13-15","stroke":"Backstroke","distance":"200","is_relay":false,"name":"Shuen Airis Heng KE","age":"13","rank":"15","rank_num":15,"time":"2:59.01","time_sec":179.01,"total_participants":17,"rank1_name":"Vivian Tee Xin Ling","rank1_team":"PNG","rank1_time":"2:25.39","rank1_sec":145.39,"mssm_record":"2:21.88","mssm_sec":141.88,"delta_rank1":33.620000000000005,"delta_mssm":37.129999999999995},{"day":2,"event_no":209,"title":"Girls 13-15 200m Backstroke","gender":"Girls","age_group":"13-15","stroke":"Backstroke","distance":"200","is_relay":false,"name":"Salman Safiyya","age":"14","rank":"17","rank_num":17,"time":"3:17.30","time_sec":197.3,"total_participants":17,"rank1_name":"Vivian Tee Xin Ling","rank1_team":"PNG","rank1_time":"2:25.39","rank1_sec":145.39,"mssm_record":"2:21.88","mssm_sec":141.88,"delta_rank1":51.910000000000025,"delta_mssm":55.420000000000016},{"day":2,"event_no":210,"title":"Boys 13-15 200m Backstroke","gender":"Boys","age_group":"13-15","stroke":"Backstroke","distance":"200","is_relay":false,"name":"Shahrul Nizam Adam","age":"14","rank":"16","rank_num":16,"time":"2:43.42","time_sec":163.42000000000002,"total_participants":20,"rank1_name":"Edwin Loke EU Zhe","rank1_team":"KDH","rank1_time":"2:15.26","rank1_sec":135.26,"mssm_record":"2:10.91","mssm_sec":130.91,"delta_rank1":28.160000000000025,"delta_mssm":32.51000000000002},{"day":2,"event_no":211,"title":"Girls 16-18 200m Backstroke","gender":"Girls","age_group":"16-18","stroke":"Backstroke","distance":"200","is_relay":false,"name":"Chin Heng YI","age":"16","rank":"17","rank_num":17,"time":"3:18.83","time_sec":198.82999999999998,"total_participants":17,"rank1_name":"Shanise Jauwa Anak Joseline Adon","rank1_team":"SWK","rank1_time":"2:27.92","rank1_sec":147.92000000000002,"mssm_record":"2:23.94","mssm_sec":143.94,"delta_rank1":50.90999999999997,"delta_mssm":54.889999999999986},{"day":2,"event_no":212,"title":"Boys 16-18 200m Backstroke","gender":"Boys","age_group":"16-18","stroke":"Backstroke","distance":"200","is_relay":false,"name":"Kuan Kai Jun","age":"16","rank":"13","rank_num":13,"time":"2:30.24","time_sec":150.24,"total_participants":15,"rank1_name":"Ngui Jing","rank1_team":"NSE","rank1_time":"2:13.53","rank1_sec":133.53,"mssm_record":"2:05.55","mssm_sec":125.55,"delta_rank1":16.710000000000008,"delta_mssm":24.690000000000012},{"day":2,"event_no":213,"title":"Girls 7-12 100m Butterfly","gender":"Girls","age_group":"7-12","stroke":"Butterfly","distance":"100","is_relay":false,"name":"Meor Ahmad Azizul HA A Putri Dh","age":"12","rank":"22","rank_num":22,"time":"1:37.06","time_sec":97.06,"total_participants":23,"rank1_name":"Lai Wen AN","rank1_team":"MLK","rank1_time":"1:06.70R","rank1_sec":66.7,"mssm_record":"1:08.26","mssm_sec":68.26,"delta_rank1":30.36,"delta_mssm":28.799999999999997},{"day":2,"event_no":214,"title":"Boys 7-12 100m Butterfly","gender":"Boys","age_group":"7-12","stroke":"Butterfly","distance":"100","is_relay":false,"name":"Chin Kok Jun","age":"12","rank":"19","rank_num":19,"time":"1:20.11","time_sec":80.11,"total_participants":27,"rank1_name":"Edryiey Lee Juen Wey","rank1_team":"NSE","rank1_time":"1:05.60","rank1_sec":65.6,"mssm_record":"1:02.80","mssm_sec":62.8,"delta_rank1":14.510000000000005,"delta_mssm":17.310000000000002},{"day":2,"event_no":214,"title":"Boys 7-12 100m Butterfly","gender":"Boys","age_group":"7-12","stroke":"Butterfly","distance":"100","is_relay":false,"name":"John TI Chun Yang","age":"12","rank":"26","rank_num":26,"time":"1:34.24","time_sec":94.24000000000001,"total_participants":27,"rank1_name":"Edryiey Lee Juen Wey","rank1_team":"NSE","rank1_time":"1:05.60","rank1_sec":65.6,"mssm_record":"1:02.80","mssm_sec":62.8,"delta_rank1":28.640000000000015,"delta_mssm":31.440000000000012},{"day":2,"event_no":216,"title":"Boys 13-15 100m Butterfly","gender":"Boys","age_group":"13-15","stroke":"Butterfly","distance":"100","is_relay":false,"name":"Shahrul Nizam Adam","age":"14","rank":"20","rank_num":20,"time":"1:08.10","time_sec":68.1,"total_participants":26,"rank1_name":"Damian Seth Lim","rank1_team":"SGR","rank1_time":"58.21","rank1_sec":58.21,"mssm_record":"56.86","mssm_sec":56.86,"delta_rank1":9.889999999999993,"delta_mssm":11.239999999999995},{"day":2,"event_no":216,"title":"Boys 13-15 100m Butterfly","gender":"Boys","age_group":"13-15","stroke":"Butterfly","distance":"100","is_relay":false,"name":"Lau Ber Lin","age":"15","rank":"23","rank_num":23,"time":"1:11.31","time_sec":71.31,"total_participants":26,"rank1_name":"Damian Seth Lim","rank1_team":"SGR","rank1_time":"58.21","rank1_sec":58.21,"mssm_record":"56.86","mssm_sec":56.86,"delta_rank1":13.100000000000001,"delta_mssm":14.450000000000003},{"day":2,"event_no":217,"title":"Girls 16-18 100m Butterfly","gender":"Girls","age_group":"16-18","stroke":"Butterfly","distance":"100","is_relay":false,"name":"Salman Sascha","age":"16","rank":"15","rank_num":15,"time":"1:31.42","time_sec":91.42,"total_participants":15,"rank1_name":"Yap KE Hui","rank1_team":"SGR","rank1_time":"1:06.58","rank1_sec":66.58,"mssm_record":"1:03.11","mssm_sec":63.11,"delta_rank1":24.840000000000003,"delta_mssm":28.310000000000002},{"day":2,"event_no":218,"title":"Boys 16-18 100m Butterfly","gender":"Boys","age_group":"16-18","stroke":"Butterfly","distance":"100","is_relay":false,"name":"NG Bing Hao","age":"16","rank":"21","rank_num":21,"time":"1:10.46","time_sec":70.46000000000001,"total_participants":24,"rank1_name":"Sophocles NG Xinxian","rank1_team":"JHR","rank1_time":"57.72","rank1_sec":57.72,"mssm_record":"55.67","mssm_sec":55.67,"delta_rank1":12.740000000000009,"delta_mssm":14.790000000000006},{"day":2,"event_no":219,"title":"Mixed 7-12 200m Medley 4X50 Relay","gender":"Mixed","age_group":"7-12","stroke":"Medley","distance":"200","is_relay":true,"name":"Pahang","age":null,"rank":"11","rank_num":11,"time":"2:40.85","time_sec":160.85,"total_participants":13,"rank1_name":"Selangor","rank1_team":"SGR","rank1_time":"2:06.32R","rank1_sec":126.32,"mssm_record":"2:07.54","mssm_sec":127.54,"delta_rank1":34.53,"delta_mssm":33.30999999999999},{"day":2,"event_no":220,"title":"Mixed 13-15 400m Medley 4X100 Relay","gender":"Mixed","age_group":"13-15","stroke":"Medley","distance":"400","is_relay":true,"name":"Pahang","age":null,"rank":"10","rank_num":10,"time":"5:02.53","time_sec":302.53,"total_participants":14,"rank1_name":"Pulau Pinang","rank1_team":"PNG","rank1_time":"4:20.19","rank1_sec":260.19,"mssm_record":"4:18.98","mssm_sec":258.98,"delta_rank1":42.339999999999975,"delta_mssm":43.549999999999955},{"day":3,"event_no":301,"title":"Girls 7-12 100m Freestyle","gender":"Girls","age_group":"7-12","stroke":"Freestyle","distance":"100","is_relay":false,"name":"Liew Zhi Jing","age":"12","rank":"26","rank_num":26,"time":"1:23.38","time_sec":83.38,"total_participants":27,"rank1_name":"Lai Wen AN","rank1_team":"MLK","rank1_time":"1:01.81","rank1_sec":61.81,"mssm_record":"1:01.25","mssm_sec":61.25,"delta_rank1":21.569999999999993,"delta_mssm":22.129999999999995},{"day":3,"event_no":301,"title":"Girls 7-12 100m Freestyle","gender":"Girls","age_group":"7-12","stroke":"Freestyle","distance":"100","is_relay":false,"name":"Meor Ahmad Azizul HA A Putri Dh","age":"12","rank":"27","rank_num":27,"time":"1:24.16","time_sec":84.16,"total_participants":27,"rank1_name":"Lai Wen AN","rank1_team":"MLK","rank1_time":"1:01.81","rank1_sec":61.81,"mssm_record":"1:01.25","mssm_sec":61.25,"delta_rank1":22.349999999999994,"delta_mssm":22.909999999999997},{"day":3,"event_no":302,"title":"Boys 7-12 100m Freestyle","gender":"Boys","age_group":"7-12","stroke":"Freestyle","distance":"100","is_relay":false,"name":"Chin Kok Jun","age":"12","rank":"22","rank_num":22,"time":"1:10.83","time_sec":70.83,"total_participants":32,"rank1_name":"Owen Chan Kai Wen","rank1_team":"SGR","rank1_time":"1:00.77","rank1_sec":60.77,"mssm_record":"58.14","mssm_sec":58.14,"delta_rank1":10.059999999999995,"delta_mssm":12.689999999999998},{"day":3,"event_no":302,"title":"Boys 7-12 100m Freestyle","gender":"Boys","age_group":"7-12","stroke":"Freestyle","distance":"100","is_relay":false,"name":"John TI Chun Yang","age":"12","rank":"28","rank_num":28,"time":"1:16.90","time_sec":76.9,"total_participants":32,"rank1_name":"Owen Chan Kai Wen","rank1_team":"SGR","rank1_time":"1:00.77","rank1_sec":60.77,"mssm_record":"58.14","mssm_sec":58.14,"delta_rank1":16.130000000000003,"delta_mssm":18.760000000000005},{"day":3,"event_no":303,"title":"Girls 13-15 100m Freestyle","gender":"Girls","age_group":"13-15","stroke":"Freestyle","distance":"100","is_relay":false,"name":"Tan KE Qing","age":"13","rank":"22","rank_num":22,"time":"1:11.87","time_sec":71.87,"total_participants":27,"rank1_name":"Tan Rui Nee","rank1_team":"PNG","rank1_time":"1:01.24","rank1_sec":61.24,"mssm_record":"59.00","mssm_sec":59.0,"delta_rank1":10.630000000000003,"delta_mssm":12.870000000000005},{"day":3,"event_no":303,"title":"Girls 13-15 100m Freestyle","gender":"Girls","age_group":"13-15","stroke":"Freestyle","distance":"100","is_relay":false,"name":"Salman Safiyya","age":"14","rank":"25","rank_num":25,"time":"1:14.27","time_sec":74.27,"total_participants":27,"rank1_name":"Tan Rui Nee","rank1_team":"PNG","rank1_time":"1:01.24","rank1_sec":61.24,"mssm_record":"59.00","mssm_sec":59.0,"delta_rank1":13.029999999999994,"delta_mssm":15.269999999999996},{"day":3,"event_no":304,"title":"Boys 13-15 100m Freestyle","gender":"Boys","age_group":"13-15","stroke":"Freestyle","distance":"100","is_relay":false,"name":"Shahrul Nizam Adam","age":"14","rank":"24","rank_num":24,"time":"1:03.78","time_sec":63.78,"total_participants":29,"rank1_name":"Hermann Tang Bok YU","rank1_team":"SGR","rank1_time":"54.66","rank1_sec":54.66,"mssm_record":"53.40","mssm_sec":53.4,"delta_rank1":9.120000000000005,"delta_mssm":10.380000000000003},{"day":3,"event_no":304,"title":"Boys 13-15 100m Freestyle","gender":"Boys","age_group":"13-15","stroke":"Freestyle","distance":"100","is_relay":false,"name":"Abdul Khadir I Muhammad Hadi","age":"15","rank":"28","rank_num":28,"time":"1:05.70","time_sec":65.7,"total_participants":29,"rank1_name":"Hermann Tang Bok YU","rank1_team":"SGR","rank1_time":"54.66","rank1_sec":54.66,"mssm_record":"53.40","mssm_sec":53.4,"delta_rank1":11.040000000000006,"delta_mssm":12.300000000000004},{"day":3,"event_no":305,"title":"Girls 16-18 100m Freestyle","gender":"Girls","age_group":"16-18","stroke":"Freestyle","distance":"100","is_relay":false,"name":"Salman Sascha","age":"16","rank":"22","rank_num":22,"time":"1:23.80","time_sec":83.8,"total_participants":25,"rank1_name":"Chan Yiwen Elizabeth","rank1_team":"WPKL","rank1_time":"1:00.96","rank1_sec":60.96,"mssm_record":"58.57","mssm_sec":58.57,"delta_rank1":22.839999999999996,"delta_mssm":25.229999999999997},{"day":3,"event_no":305,"title":"Girls 16-18 100m Freestyle","gender":"Girls","age_group":"16-18","stroke":"Freestyle","distance":"100","is_relay":false,"name":"Teh Kai Ling","age":"17","rank":"23","rank_num":23,"time":"1:30.69","time_sec":90.69,"total_participants":25,"rank1_name":"Chan Yiwen Elizabeth","rank1_team":"WPKL","rank1_time":"1:00.96","rank1_sec":60.96,"mssm_record":"58.57","mssm_sec":58.57,"delta_rank1":29.729999999999997,"delta_mssm":32.12},{"day":3,"event_no":306,"title":"Boys 16-18 100m Freestyle","gender":"Boys","age_group":"16-18","stroke":"Freestyle","distance":"100","is_relay":false,"name":"NG Bing Hao","age":"16","rank":"20","rank_num":20,"time":"1:01.24","time_sec":61.24,"total_participants":28,"rank1_name":"Loo Cheng Feng","rank1_team":"PNG","rank1_time":"52.89","rank1_sec":52.89,"mssm_record":"51.47","mssm_sec":51.47,"delta_rank1":8.350000000000001,"delta_mssm":9.770000000000003},{"day":3,"event_no":307,"title":"Girls 7-12 50m Backstroke","gender":"Girls","age_group":"7-12","stroke":"Backstroke","distance":"50","is_relay":false,"name":"Liew Zhi Jing","age":"12","rank":"24","rank_num":24,"time":"46.67","time_sec":46.67,"total_participants":25,"rank1_name":"Lai Wen AN","rank1_team":"MLK","rank1_time":"31.85R","rank1_sec":31.85,"mssm_record":"32.54","mssm_sec":32.54,"delta_rank1":14.82,"delta_mssm":14.130000000000003},{"day":3,"event_no":308,"title":"Boys 7-12 50m Backstroke","gender":"Boys","age_group":"7-12","stroke":"Backstroke","distance":"50","is_relay":false,"name":"Chin Kok Jun","age":"12","rank":"24","rank_num":24,"time":"40.91","time_sec":40.91,"total_participants":29,"rank1_name":"Owen Chan Kai Wen","rank1_team":"SGR","rank1_time":"32.81","rank1_sec":32.81,"mssm_record":"31.04","mssm_sec":31.04,"delta_rank1":8.099999999999994,"delta_mssm":9.869999999999997},{"day":3,"event_no":308,"title":"Boys 7-12 50m Backstroke","gender":"Boys","age_group":"7-12","stroke":"Backstroke","distance":"50","is_relay":false,"name":"Yam Chun Hei","age":"12","rank":"26","rank_num":26,"time":"41.52","time_sec":41.52,"total_participants":29,"rank1_name":"Owen Chan Kai Wen","rank1_team":"SGR","rank1_time":"32.81","rank1_sec":32.81,"mssm_record":"31.04","mssm_sec":31.04,"delta_rank1":8.71,"delta_mssm":10.480000000000004},{"day":3,"event_no":309,"title":"Girls 13-15 50m Backstroke","gender":"Girls","age_group":"13-15","stroke":"Backstroke","distance":"50","is_relay":false,"name":"Shuen Airis Heng KE","age":"13","rank":"20","rank_num":20,"time":"39.67","time_sec":39.67,"total_participants":25,"rank1_name":"Vivian Tee Xin Ling","rank1_team":"PNG","rank1_time":"30.97","rank1_sec":30.97,"mssm_record":"30.52","mssm_sec":30.52,"delta_rank1":8.700000000000003,"delta_mssm":9.150000000000002},{"day":3,"event_no":309,"title":"Girls 13-15 50m Backstroke","gender":"Girls","age_group":"13-15","stroke":"Backstroke","distance":"50","is_relay":false,"name":"Tan KE Qing","age":"13","rank":"22","rank_num":22,"time":"39.94","time_sec":39.94,"total_participants":25,"rank1_name":"Vivian Tee Xin Ling","rank1_team":"PNG","rank1_time":"30.97","rank1_sec":30.97,"mssm_record":"30.52","mssm_sec":30.52,"delta_rank1":8.969999999999999,"delta_mssm":9.419999999999998},{"day":3,"event_no":310,"title":"Boys 13-15 50m Backstroke","gender":"Boys","age_group":"13-15","stroke":"Backstroke","distance":"50","is_relay":false,"name":"Shahrul Nizam Adam","age":"14","rank":"22","rank_num":22,"time":"35.50","time_sec":35.5,"total_participants":25,"rank1_name":"Edwin Loke EU Zhe","rank1_team":"KDH","rank1_time":"28.53","rank1_sec":28.53,"mssm_record":"27.73","mssm_sec":27.73,"delta_rank1":6.969999999999999,"delta_mssm":7.77},{"day":3,"event_no":310,"title":"Boys 13-15 50m Backstroke","gender":"Boys","age_group":"13-15","stroke":"Backstroke","distance":"50","is_relay":false,"name":"Abdul Khadir I Muhammad Hadi","age":"15","rank":"25","rank_num":25,"time":"38.31","time_sec":38.31,"total_participants":25,"rank1_name":"Edwin Loke EU Zhe","rank1_team":"KDH","rank1_time":"28.53","rank1_sec":28.53,"mssm_record":"27.73","mssm_sec":27.73,"delta_rank1":9.780000000000001,"delta_mssm":10.580000000000002},{"day":3,"event_no":311,"title":"Girls 16-18 50m Backstroke","gender":"Girls","age_group":"16-18","stroke":"Backstroke","distance":"50","is_relay":false,"name":"Chin Heng YI","age":"16","rank":"23","rank_num":23,"time":"42.40","time_sec":42.4,"total_participants":27,"rank1_name":"Khong ZI Lin","rank1_team":"PRK","rank1_time":"32.01","rank1_sec":32.01,"mssm_record":"30.52","mssm_sec":30.52,"delta_rank1":10.39,"delta_mssm":11.879999999999999},{"day":3,"event_no":311,"title":"Girls 16-18 50m Backstroke","gender":"Girls","age_group":"16-18","stroke":"Backstroke","distance":"50","is_relay":false,"name":"Salman Sascha","age":"16","rank":"25","rank_num":25,"time":"43.43","time_sec":43.43,"total_participants":27,"rank1_name":"Khong ZI Lin","rank1_team":"PRK","rank1_time":"32.01","rank1_sec":32.01,"mssm_record":"30.52","mssm_sec":30.52,"delta_rank1":11.420000000000002,"delta_mssm":12.91},{"day":3,"event_no":312,"title":"Boys 16-18 50m Backstroke","gender":"Boys","age_group":"16-18","stroke":"Backstroke","distance":"50","is_relay":false,"name":"Muhammad Azim Hakeem Hasbu","age":"16","rank":"4","rank_num":4,"time":"29.20","time_sec":29.2,"total_participants":21,"rank1_name":"Khew MU Han","rank1_team":"SGR","rank1_time":"28.03","rank1_sec":28.03,"mssm_record":"27.32","mssm_sec":27.32,"delta_rank1":1.1699999999999982,"delta_mssm":1.879999999999999},{"day":3,"event_no":312,"title":"Boys 16-18 50m Backstroke","gender":"Boys","age_group":"16-18","stroke":"Backstroke","distance":"50","is_relay":false,"name":"Kuan Kai Jun","age":"16","rank":"17","rank_num":17,"time":"31.88","time_sec":31.88,"total_participants":21,"rank1_name":"Khew MU Han","rank1_team":"SGR","rank1_time":"28.03","rank1_sec":28.03,"mssm_record":"27.32","mssm_sec":27.32,"delta_rank1":3.849999999999998,"delta_mssm":4.559999999999999},{"day":3,"event_no":314,"title":"Boys 7-12 200m Individual Medley","gender":"Boys","age_group":"7-12","stroke":"IM","distance":"200","is_relay":false,"name":"Chin Kok Jun","age":"12","rank":"22","rank_num":22,"time":"3:00.20","time_sec":180.2,"total_participants":23,"rank1_name":"Yap QI Zhen","rank1_team":"MLK","rank1_time":"2:28.78","rank1_sec":148.78,"mssm_record":"2:25.72","mssm_sec":145.72,"delta_rank1":31.419999999999987,"delta_mssm":34.47999999999999},{"day":3,"event_no":314,"title":"Boys 7-12 200m Individual Medley","gender":"Boys","age_group":"7-12","stroke":"IM","distance":"200","is_relay":false,"name":"John TI Chun Yang","age":"12","rank":"23","rank_num":23,"time":"3:18.14","time_sec":198.14,"total_participants":23,"rank1_name":"Yap QI Zhen","rank1_team":"MLK","rank1_time":"2:28.78","rank1_sec":148.78,"mssm_record":"2:25.72","mssm_sec":145.72,"delta_rank1":49.359999999999985,"delta_mssm":52.41999999999999},{"day":3,"event_no":316,"title":"Boys 13-15 200m Individual Medley","gender":"Boys","age_group":"13-15","stroke":"IM","distance":"200","is_relay":false,"name":"Lau Ber Lin","age":"15","rank":"21","rank_num":21,"time":"2:38.74","time_sec":158.74,"total_participants":25,"rank1_name":"Johan NG","rank1_team":"PNG","rank1_time":"2:15.56","rank1_sec":135.56,"mssm_record":"2:12.90","mssm_sec":132.9,"delta_rank1":23.180000000000007,"delta_mssm":25.840000000000003},{"day":3,"event_no":317,"title":"Girls 16-18 200m Individual Medley","gender":"Girls","age_group":"16-18","stroke":"IM","distance":"200","is_relay":false,"name":"Tan Zhen Qing","age":"16","rank":"15","rank_num":15,"time":"3:05.96","time_sec":185.96,"total_participants":15,"rank1_name":"Khoo Sue Enn","rank1_team":"SGR","rank1_time":"2:26.97","rank1_sec":146.97,"mssm_record":"2:21.33","mssm_sec":141.32999999999998,"delta_rank1":38.99000000000001,"delta_mssm":44.630000000000024},{"day":3,"event_no":318,"title":"Boys 16-18 200m Individual Medley","gender":"Boys","age_group":"16-18","stroke":"IM","distance":"200","is_relay":false,"name":"Kuan Kai Jun","age":"16","rank":"16","rank_num":16,"time":"2:28.23","time_sec":148.23,"total_participants":22,"rank1_name":"Sophocles NG Xinxian","rank1_team":"JHR","rank1_time":"2:10.93","rank1_sec":130.93,"mssm_record":"2:09.30","mssm_sec":129.3,"delta_rank1":17.299999999999983,"delta_mssm":18.92999999999998},{"day":3,"event_no":318,"title":"Boys 16-18 200m Individual Medley","gender":"Boys","age_group":"16-18","stroke":"IM","distance":"200","is_relay":false,"name":"Wong Jing Lin","age":"16","rank":"19","rank_num":19,"time":"2:35.12","time_sec":155.12,"total_participants":22,"rank1_name":"Sophocles NG Xinxian","rank1_team":"JHR","rank1_time":"2:10.93","rank1_sec":130.93,"mssm_record":"2:09.30","mssm_sec":129.3,"delta_rank1":24.189999999999998,"delta_mssm":25.819999999999993},{"day":3,"event_no":319,"title":"Mixed 7-12 200m Freestyle 4X50 Relay","gender":"Mixed","age_group":"7-12","stroke":"Freestyle","distance":"200","is_relay":true,"name":"Pahang","age":null,"rank":"---","rank_num":null,"time":"DQ","time_sec":null,"total_participants":13,"rank1_name":"Selangor","rank1_team":"SGR","rank1_time":"1:55.34","rank1_sec":115.34,"mssm_record":"1:54.05","mssm_sec":114.05,"delta_rank1":null,"delta_mssm":null},{"day":3,"event_no":320,"title":"Mixed 13-15 400m Freestyle 4X100 Relay","gender":"Mixed","age_group":"13-15","stroke":"Freestyle","distance":"400","is_relay":true,"name":"Pahang","age":null,"rank":"---","rank_num":null,"time":"DQ","time_sec":null,"total_participants":13,"rank1_name":"Selangor","rank1_team":"SGR","rank1_time":"3:54.83","rank1_sec":234.82999999999998,"mssm_record":"3:49.56","mssm_sec":229.56,"delta_rank1":null,"delta_mssm":null},{"day":4,"event_no":401,"title":"Girls Open 800m Freestyle","gender":"Girls","age_group":"Open","stroke":"Freestyle","distance":"800","is_relay":false,"name":"Tan KE Qing","age":"13","rank":"12","rank_num":12,"time":"11:55.66","time_sec":715.66,"total_participants":13,"rank1_name":"Tan Rui Nee","rank1_team":"PNG","rank1_time":"9:38.78","rank1_sec":578.78,"mssm_record":"9:04.83","mssm_sec":544.83,"delta_rank1":136.88,"delta_mssm":170.82999999999993},{"day":4,"event_no":401,"title":"Girls Open 800m Freestyle","gender":"Girls","age_group":"Open","stroke":"Freestyle","distance":"800","is_relay":false,"name":"Salman Safiyya","age":"14","rank":"13","rank_num":13,"time":"12:14.57","time_sec":734.57,"total_participants":13,"rank1_name":"Tan Rui Nee","rank1_team":"PNG","rank1_time":"9:38.78","rank1_sec":578.78,"mssm_record":"9:04.83","mssm_sec":544.83,"delta_rank1":155.79000000000008,"delta_mssm":189.74},{"day":4,"event_no":404,"title":"Boys Open 400m Individual Medley","gender":"Boys","age_group":"Open","stroke":"IM","distance":"400","is_relay":false,"name":"NG Zong Heng","age":"15","rank":"16","rank_num":16,"time":"5:41.05","time_sec":341.05,"total_participants":16,"rank1_name":"Ngui Jing","rank1_team":"NSE","rank1_time":"4:43.23","rank1_sec":283.23,"mssm_record":"4:37.61","mssm_sec":277.61,"delta_rank1":57.81999999999999,"delta_mssm":63.44},{"day":4,"event_no":405,"title":"Girls 7-12 50m Freestyle","gender":"Girls","age_group":"7-12","stroke":"Freestyle","distance":"50","is_relay":false,"name":"Liew Zhi Jing","age":"12","rank":"25","rank_num":25,"time":"35.88","time_sec":35.88,"total_participants":27,"rank1_name":"NG XI EN","rank1_team":"JHR","rank1_time":"27.96","rank1_sec":27.96,"mssm_record":"27.84","mssm_sec":27.84,"delta_rank1":7.920000000000002,"delta_mssm":8.040000000000003},{"day":4,"event_no":405,"title":"Girls 7-12 50m Freestyle","gender":"Girls","age_group":"7-12","stroke":"Freestyle","distance":"50","is_relay":false,"name":"Meor Ahmad Azizul HA A Putri Dh","age":"12","rank":"26","rank_num":26,"time":"36.61","time_sec":36.61,"total_participants":27,"rank1_name":"NG XI EN","rank1_team":"JHR","rank1_time":"27.96","rank1_sec":27.96,"mssm_record":"27.84","mssm_sec":27.84,"delta_rank1":8.649999999999999,"delta_mssm":8.77},{"day":4,"event_no":406,"title":"Boys 7-12 50m Freestyle","gender":"Boys","age_group":"7-12","stroke":"Freestyle","distance":"50","is_relay":false,"name":"Chin Kok Jun","age":"12","rank":"23","rank_num":23,"time":"31.23","time_sec":31.23,"total_participants":32,"rank1_name":"Owen Chan Kai Wen","rank1_team":"SGR","rank1_time":"27.82","rank1_sec":27.82,"mssm_record":"26.36","mssm_sec":26.36,"delta_rank1":3.41,"delta_mssm":4.870000000000001},{"day":4,"event_no":406,"title":"Boys 7-12 50m Freestyle","gender":"Boys","age_group":"7-12","stroke":"Freestyle","distance":"50","is_relay":false,"name":"John TI Chun Yang","age":"12","rank":"29","rank_num":29,"time":"34.93","time_sec":34.93,"total_participants":32,"rank1_name":"Owen Chan Kai Wen","rank1_team":"SGR","rank1_time":"27.82","rank1_sec":27.82,"mssm_record":"26.36","mssm_sec":26.36,"delta_rank1":7.109999999999999,"delta_mssm":8.57},{"day":4,"event_no":407,"title":"Girls 13-15 50m Freestyle","gender":"Girls","age_group":"13-15","stroke":"Freestyle","distance":"50","is_relay":false,"name":"Tan KE Qing","age":"13","rank":"23","rank_num":23,"time":"32.74","time_sec":32.74,"total_participants":29,"rank1_name":"Yap Cai LI Analey","rank1_team":"WPKL","rank1_time":"28.23","rank1_sec":28.23,"mssm_record":"26.86","mssm_sec":26.86,"delta_rank1":4.510000000000002,"delta_mssm":5.880000000000003},{"day":4,"event_no":407,"title":"Girls 13-15 50m Freestyle","gender":"Girls","age_group":"13-15","stroke":"Freestyle","distance":"50","is_relay":false,"name":"Salman Safiyya","age":"14","rank":"24","rank_num":24,"time":"32.90","time_sec":32.9,"total_participants":29,"rank1_name":"Yap Cai LI Analey","rank1_team":"WPKL","rank1_time":"28.23","rank1_sec":28.23,"mssm_record":"26.86","mssm_sec":26.86,"delta_rank1":4.669999999999998,"delta_mssm":6.039999999999999},{"day":4,"event_no":408,"title":"Boys 13-15 50m Freestyle","gender":"Boys","age_group":"13-15","stroke":"Freestyle","distance":"50","is_relay":false,"name":"Abdul Khadir I Muhammad Hadi","age":"15","rank":"23","rank_num":23,"time":"28.26","time_sec":28.26,"total_participants":29,"rank1_name":"Damian Seth Lim","rank1_team":"SGR","rank1_time":"24.68R","rank1_sec":24.68,"mssm_record":"24.68","mssm_sec":24.68,"delta_rank1":3.580000000000002,"delta_mssm":3.580000000000002},{"day":4,"event_no":408,"title":"Boys 13-15 50m Freestyle","gender":"Boys","age_group":"13-15","stroke":"Freestyle","distance":"50","is_relay":false,"name":"Shahrul Nizam Adam","age":"14","rank":"25","rank_num":25,"time":"28.97","time_sec":28.97,"total_participants":29,"rank1_name":"Damian Seth Lim","rank1_team":"SGR","rank1_time":"24.68R","rank1_sec":24.68,"mssm_record":"24.68","mssm_sec":24.68,"delta_rank1":4.289999999999999,"delta_mssm":4.289999999999999},{"day":4,"event_no":409,"title":"Girls 16-18 50m Freestyle","gender":"Girls","age_group":"16-18","stroke":"Freestyle","distance":"50","is_relay":false,"name":"Chin Heng YI","age":"16","rank":"22","rank_num":22,"time":"35.01","time_sec":35.01,"total_participants":24,"rank1_name":"Khong ZI Lin","rank1_team":"PRK","rank1_time":"27.30","rank1_sec":27.3,"mssm_record":"26.78","mssm_sec":26.78,"delta_rank1":7.709999999999997,"delta_mssm":8.229999999999997},{"day":4,"event_no":409,"title":"Girls 16-18 50m Freestyle","gender":"Girls","age_group":"16-18","stroke":"Freestyle","distance":"50","is_relay":false,"name":"Salman Sascha","age":"16","rank":"23","rank_num":23,"time":"36.70","time_sec":36.7,"total_participants":24,"rank1_name":"Khong ZI Lin","rank1_team":"PRK","rank1_time":"27.30","rank1_sec":27.3,"mssm_record":"26.78","mssm_sec":26.78,"delta_rank1":9.400000000000002,"delta_mssm":9.920000000000002},{"day":4,"event_no":410,"title":"Boys 16-18 50m Freestyle","gender":"Boys","age_group":"16-18","stroke":"Freestyle","distance":"50","is_relay":false,"name":"Muhammad Azim Hakeem Hasbu","age":"16","rank":"13","rank_num":13,"time":"25.65","time_sec":25.65,"total_participants":29,"rank1_name":"Loo Cheng Feng","rank1_team":"PNG","rank1_time":"24.11","rank1_sec":24.11,"mssm_record":"23.85","mssm_sec":23.85,"delta_rank1":1.5399999999999991,"delta_mssm":1.7999999999999972},{"day":4,"event_no":410,"title":"Boys 16-18 50m Freestyle","gender":"Boys","age_group":"16-18","stroke":"Freestyle","distance":"50","is_relay":false,"name":"NG Bing Hao","age":"16","rank":"23","rank_num":23,"time":"27.76","time_sec":27.76,"total_participants":29,"rank1_name":"Loo Cheng Feng","rank1_team":"PNG","rank1_time":"24.11","rank1_sec":24.11,"mssm_record":"23.85","mssm_sec":23.85,"delta_rank1":3.650000000000002,"delta_mssm":3.91},{"day":4,"event_no":411,"title":"Girls 13-15 200m Breaststroke","gender":"Girls","age_group":"13-15","stroke":"Breaststroke","distance":"200","is_relay":false,"name":"Shuen Dioris Heng Hui","age":"14","rank":"15","rank_num":15,"time":"3:28.08","time_sec":208.07999999999998,"total_participants":15,"rank1_name":"Jodie Yip JI Shin","rank1_team":"MLK","rank1_time":"2:40.68","rank1_sec":160.68,"mssm_record":"2:35.75","mssm_sec":155.75,"delta_rank1":47.39999999999998,"delta_mssm":52.329999999999984},{"day":4,"event_no":412,"title":"Boys 13-15 200m Breaststroke","gender":"Boys","age_group":"13-15","stroke":"Breaststroke","distance":"200","is_relay":false,"name":"NG Zong Heng","age":"15","rank":"21","rank_num":21,"time":"2:56.17","time_sec":176.17000000000002,"total_participants":25,"rank1_name":"Anson Chiu Wei Kiet","rank1_team":"SWK","rank1_time":"2:25.05R","rank1_sec":145.05,"mssm_record":"2:27.14","mssm_sec":147.14,"delta_rank1":31.120000000000005,"delta_mssm":29.03000000000003},{"day":4,"event_no":413,"title":"Girls 16-18 200m Breaststroke","gender":"Girls","age_group":"16-18","stroke":"Breaststroke","distance":"200","is_relay":false,"name":"Tan Zhen Qing","age":"16","rank":"12","rank_num":12,"time":"3:22.62","time_sec":202.62,"total_participants":12,"rank1_name":"Khoo Sue Enn","rank1_team":"SGR","rank1_time":"2:41.40","rank1_sec":161.4,"mssm_record":"2:37.23","mssm_sec":157.23,"delta_rank1":41.22,"delta_mssm":45.390000000000015},{"day":4,"event_no":414,"title":"Boys 16-18 200m Breaststroke","gender":"Boys","age_group":"16-18","stroke":"Breaststroke","distance":"200","is_relay":false,"name":"Wong Jing Lin","age":"16","rank":"14","rank_num":14,"time":"2:48.00","time_sec":168.0,"total_participants":16,"rank1_name":"Sophocles NG Xinxian","rank1_team":"JHR","rank1_time":"2:22.21","rank1_sec":142.21,"mssm_record":"2:20.84","mssm_sec":140.84,"delta_rank1":25.789999999999992,"delta_mssm":27.159999999999997},{"day":4,"event_no":415,"title":"Girls 7-12 200m Medley 4X50 Relay","gender":"Girls","age_group":"7-12","stroke":"Medley","distance":"200","is_relay":true,"name":"Pahang","age":null,"rank":"12","rank_num":12,"time":"2:50.79","time_sec":170.79,"total_participants":12,"rank1_name":"Selangor","rank1_team":"SGR","rank1_time":"2:10.08R","rank1_sec":130.08,"mssm_record":"2:13.14","mssm_sec":133.14,"delta_rank1":40.70999999999998,"delta_mssm":37.650000000000006},{"day":4,"event_no":416,"title":"Boys 7-12 200m Medley 4X50 Relay","gender":"Boys","age_group":"7-12","stroke":"Medley","distance":"200","is_relay":true,"name":"Pahang","age":null,"rank":"9","rank_num":9,"time":"2:34.60","time_sec":154.6,"total_participants":12,"rank1_name":"Negeri Sembilan","rank1_team":"NSE","rank1_time":"2:09.45","rank1_sec":129.45,"mssm_record":"2:05.12","mssm_sec":125.12,"delta_rank1":25.150000000000006,"delta_mssm":29.47999999999999},{"day":4,"event_no":418,"title":"Boys 13-15 400m Medley 4X100 Relay","gender":"Boys","age_group":"13-15","stroke":"Medley","distance":"400","is_relay":true,"name":"Pahang","age":null,"rank":"11","rank_num":11,"time":"4:41.07","time_sec":281.07,"total_participants":13,"rank1_name":"Selangor","rank1_team":"SGR","rank1_time":"4:08.07","rank1_sec":248.07,"mssm_record":"4:05.58","mssm_sec":245.58,"delta_rank1":33.0,"delta_mssm":35.48999999999998},{"day":4,"event_no":419,"title":"Girls 16-18 400m Medley 4X100 Relay","gender":"Girls","age_group":"16-18","stroke":"Medley","distance":"400","is_relay":true,"name":"Pahang","age":null,"rank":"7","rank_num":7,"time":"6:10.12","time_sec":370.12,"total_participants":7,"rank1_name":"Selangor","rank1_team":"SGR","rank1_time":"4:35.79","rank1_sec":275.79,"mssm_record":"4:33.96","mssm_sec":273.96,"delta_rank1":94.32999999999998,"delta_mssm":96.16000000000003},{"day":4,"event_no":420,"title":"Boys 16-18 400m Medley 4X100 Relay","gender":"Boys","age_group":"16-18","stroke":"Medley","distance":"400","is_relay":true,"name":"Pahang","age":null,"rank":"10","rank_num":10,"time":"4:28.61","time_sec":268.61,"total_participants":10,"rank1_name":"Selangor","rank1_team":"SGR","rank1_time":"4:02.95","rank1_sec":242.95,"mssm_record":"3:56.31","mssm_sec":236.31,"delta_rank1":25.660000000000025,"delta_mssm":32.30000000000001},{"day":5,"event_no":501,"title":"Girls Open 400m Freestyle","gender":"Girls","age_group":"Open","stroke":"Freestyle","distance":"400","is_relay":false,"name":"Shuen Dioris Heng Hui","age":"14","rank":"14","rank_num":14,"time":"5:39.94","time_sec":339.94,"total_participants":15,"rank1_name":"Tan Rui Nee","rank1_team":"PNG","rank1_time":"4:37.31","rank1_sec":277.31,"mssm_record":"4:28.50","mssm_sec":268.5,"delta_rank1":62.629999999999995,"delta_mssm":71.44},{"day":5,"event_no":501,"title":"Girls Open 400m Freestyle","gender":"Girls","age_group":"Open","stroke":"Freestyle","distance":"400","is_relay":false,"name":"Tan KE Qing","age":"13","rank":"15","rank_num":15,"time":"5:49.54","time_sec":349.54,"total_participants":15,"rank1_name":"Tan Rui Nee","rank1_team":"PNG","rank1_time":"4:37.31","rank1_sec":277.31,"mssm_record":"4:28.50","mssm_sec":268.5,"delta_rank1":72.23000000000002,"delta_mssm":81.04000000000002},{"day":5,"event_no":502,"title":"Boys Open 400m Freestyle","gender":"Boys","age_group":"Open","stroke":"Freestyle","distance":"400","is_relay":false,"name":"NG Zong Heng","age":"15","rank":"17","rank_num":17,"time":"4:51.87","time_sec":291.87,"total_participants":21,"rank1_name":"Loo Cheng Feng","rank1_team":"PNG","rank1_time":"4:16.43","rank1_sec":256.43,"mssm_record":"3:57.42","mssm_sec":237.42000000000002,"delta_rank1":35.44,"delta_mssm":54.44999999999999},{"day":5,"event_no":504,"title":"Boys 13-15 200m Butterfly","gender":"Boys","age_group":"13-15","stroke":"Butterfly","distance":"200","is_relay":false,"name":"Shahrul Nizam Adam","age":"14","rank":"15","rank_num":15,"time":"2:47.66","time_sec":167.66,"total_participants":15,"rank1_name":"Ch'Ng Saw Huai","rank1_team":"PNG","rank1_time":"2:09.69","rank1_sec":129.69,"mssm_record":"2:07.48","mssm_sec":127.48,"delta_rank1":37.97,"delta_mssm":40.17999999999999}]
+</script>
+
+<script>
+const DATA = JSON.parse(document.getElementById('pahang-data').textContent);
+
+const STROKE_LABEL = {
+  Freestyle:'Gaya Bebas', Backstroke:'Gaya Belakang', Breaststroke:'Gaya Dada',
+  Butterfly:'Gaya Kupu-kupu', IM:'Individu Medley', Medley:'Medley Relay'
+};
+const STROKES = ['Freestyle','Backstroke','Breaststroke','Butterfly','IM','Medley'];
+const AGE_GROUPS = ['7-12','13-15','16-18','Open'];
+
+let state = { day:'all', gender:'all', age:'all', stroke:'all', name:'all', rank:'all', basis:'rank1' };
+
+function populateNames(){
+  const names = [...new Set(DATA.filter(r=>r.name!=='Pahang').map(r=>r.name))].sort();
+  const sel = document.getElementById('f-name');
+  names.forEach(n=>{
+    const opt = document.createElement('option');
+    opt.value = n; opt.textContent = n;
+    sel.appendChild(opt);
+  });
+}
+
+function fmtSec(v){
+  if(v===null || v===undefined || isNaN(v)) return '&ndash;';
+  const sign = v>0 ? '+' : (v<0 ? '\u2212' : '');
+  return sign + Math.abs(v).toFixed(2) + 's';
+}
+function fmtPct(v){
+  if(v===null || v===undefined || isNaN(v)) return null;
+  return (v*100);
+}
+
+function deltaColor(pct){
+  // pct: 0 = tie, positive = slower (worse). clamp 0..35
+  if(pct===null || pct===undefined || isNaN(pct)) return null;
+  const p = Math.max(0, Math.min(35, pct));
+  const stops = [[0,[21,128,61]],[12,[234,179,8]],[35,[220,38,38]]];
+  let c0=stops[0], c1=stops[stops.length-1];
+  for(let i=0;i<stops.length-1;i++){
+    if(p<=stops[i+1][0]){ c0=stops[i]; c1=stops[i+1]; break; }
+  }
+  const t = (p-c0[0])/(c1[0]-c0[0] || 1);
+  const rgb = c0[1].map((v,i)=> Math.round(v + (c1[1][i]-v)*t));
+  return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
+}
+
+function applyFilters(){
+  return DATA.filter(r=>{
+    if(state.day!=='all' && String(r.day)!==state.day) return false;
+    if(state.gender!=='all' && r.gender!==state.gender) return false;
+    if(state.age!=='all' && r.age_group!==state.age) return false;
+    if(state.stroke!=='all' && r.stroke!==state.stroke) return false;
+    if(state.name!=='all' && r.name!==state.name) return false;
+    if(state.rank!=='all'){
+      if(r.rank_num===null || r.rank_num===undefined) return false;
+      if(r.rank_num > parseInt(state.rank)) return false;
+    }
+    return true;
+  }).sort((a,b)=> a.day-b.day || a.event_no-b.event_no || (a.rank_num||999)-(b.rank_num||999));
+}
+
+function renderSummary(rows){
+  const total = rows.length;
+  const podium = rows.filter(r=>r.rank_num!==null && r.rank_num<=3).length;
+  const top10 = rows.filter(r=>r.rank_num!==null && r.rank_num<=10).length;
+  const withDelta = rows.filter(r=> (state.basis==='mssm'? r.delta_mssm : r.delta_rank1) !== null);
+  let avgDelta = null, bestRow = null;
+  if(withDelta.length){
+    const key = state.basis==='mssm' ? 'delta_mssm' : 'delta_rank1';
+    avgDelta = withDelta.reduce((s,r)=> s + r[key], 0) / withDelta.length;
+    bestRow = withDelta.reduce((best,r)=> (r[key] < best[key] ? r : best), withDelta[0]);
+  }
+
+  const cards = [
+    {lbl:'Jumlah Rekod Dipaparkan', val: total, cls:''},
+    {lbl:'Podium (Top 3)', val: podium, cls:'gold'},
+    {lbl:'Top 10', val: top10, cls:'teal'},
+    {lbl:'Purata Beza Masa', val: avgDelta!==null ? fmtSec(avgDelta) : '&ndash;', cls:''},
+    {lbl:'Beza Terdekat', val: bestRow ? fmtSec(bestRow[state.basis==='mssm'?'delta_mssm':'delta_rank1']) : '&ndash;',
+      sub: bestRow ? (bestRow.name + ' &middot; ' + bestRow.title) : '', cls:'teal'}
+  ];
+
+  document.getElementById('summary').innerHTML = cards.map(c=>`
+    <div class="stat ${c.cls}">
+      <div class="num">${c.val}</div>
+      <div class="lbl">${c.lbl}</div>
+      ${c.sub ? `<div class="lbl" style="margin-top:6px;color:var(--muted);font-size:10.5px">${c.sub}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+function renderGridHeatmap(rows){
+  // average delta_rank1 percent per stroke x age group, using ALL data filtered by current
+  // global filters EXCEPT stroke/age (so the grid stays meaningful), but respecting day/gender/rank/basis
+  const base = DATA.filter(r=>{
+    if(state.day!=='all' && String(r.day)!==state.day) return false;
+    if(state.gender!=='all' && r.gender!==state.gender) return false;
+    if(state.rank!=='all'){
+      if(r.rank_num===null || r.rank_num===undefined) return false;
+      if(r.rank_num > parseInt(state.rank)) return false;
+    }
+    if(state.name!=='all' && r.name!==state.name) return false;
+    return r.delta_rank1!==null && r.rank1_sec;
+  });
+
+  const grid = document.getElementById('grid-heatmap');
+  const cols = AGE_GROUPS.length;
+  grid.style.gridTemplateColumns = `120px repeat(${cols}, 1fr)`;
+
+  let html = `<div class="gh-cell head">Gaya \\ Umur</div>`;
+  AGE_GROUPS.forEach(ag=> html += `<div class="gh-cell head">${ag}</div>`);
+
+  STROKES.forEach(stroke=>{
+    html += `<div class="gh-cell rowhead">${STROKE_LABEL[stroke]}</div>`;
+    AGE_GROUPS.forEach(ag=>{
+      const cell = base.filter(r=> r.stroke===stroke && r.age_group===ag);
+      if(cell.length===0){
+        html += `<div class="gh-cell empty">&ndash;</div>`;
+        return;
+      }
+      const avgPct = cell.reduce((s,r)=> s + (r.delta_rank1/r.rank1_sec*100), 0) / cell.length;
+      const color = deltaColor(avgPct);
+      html += `<div class="gh-cell" style="background:${color}; color:#0b1320">
+        <span class="pct">${avgPct.toFixed(1)}%</span>
+        <span class="cnt">${cell.length} rekod</span>
+      </div>`;
+    });
+  });
+  grid.innerHTML = html;
+}
+
+function renderTable(rows){
+  const basis = state.basis;
+  const showBoth = basis==='both';
+
+  let headHtml = `<th>Hari</th><th>Acara</th><th>Atlet</th><th>Umur</th><th>Kedudukan</th><th>Masa Pahang</th>`;
+  if(basis==='rank1' || showBoth) headHtml += `<th>Masa Juara</th><th>Beza vs Juara</th>`;
+  if(basis==='mssm' || showBoth) headHtml += `<th>Rekod MSSM</th><th>Beza vs MSSM</th>`;
+  document.getElementById('table-head').innerHTML = headHtml;
+
+  if(rows.length===0){
+    document.getElementById('table-body').innerHTML = `<tr><td colspan="10"><div class="empty-state">Tiada rekod sepadan dengan penapis semasa.</div></td></tr>`;
+    document.getElementById('table-note').textContent = '';
+    return;
+  }
+
+  document.getElementById('table-note').textContent =
+    `Memaparkan ${rows.length} rekod, disusun mengikut hari & nombor acara.`;
+
+  document.getElementById('table-body').innerHTML = rows.map(r=>{
+    const rankDisplay = r.rank==='---' ? r.rank : r.rank;
+    const isPodium = r.rank_num!==null && r.rank_num<=3;
+    const rankBadge = `<span class="rank-badge ${isPodium?'podium':''}">${rankDisplay}${r.rank_num? ' / '+r.total_participants : ''}</span>`;
+
+    let cells = `
+      <td data-label="Hari"><span class="day-badge">H${r.day}</span></td>
+      <td class="cell-event" data-label="Acara">
+        <span class="event-title">${r.title}</span>
+        <span class="event-meta">Acara ${r.event_no} &middot; ${r.gender}${r.is_relay? ' &middot; Relay':''}</span>
+      </td>
+      <td data-label="Atlet" class="athlete-name">${r.name}</td>
+      <td data-label="Umur" class="num-cell">${r.age ?? '&ndash;'}</td>
+      <td data-label="Kedudukan">${rankBadge}</td>
+      <td data-label="Masa Pahang" class="num-cell">${r.time}</td>
+    `;
+
+    function deltaCell(deltaSec, refSec){
+      if(deltaSec===null || refSec===null){
+        return `<span class="delta-cell na">N/A</span>`;
+      }
+      const pct = deltaSec/refSec*100;
+      const color = deltaColor(pct);
+      return `<span class="delta-cell" style="background:${color}">
+        ${fmtSec(deltaSec)}
+        <span class="delta-sub">${pct.toFixed(1)}%</span>
+      </span>`;
+    }
+
+    if(basis==='rank1' || showBoth){
+      cells += `<td data-label="Masa Juara" class="num-cell">${r.rank1_time ?? '&ndash;'}<span class="event-meta">${r.rank1_team ?? ''}</span></td>`;
+      cells += `<td data-label="Beza vs Juara">${deltaCell(r.delta_rank1, r.rank1_sec)}</td>`;
+    }
+    if(basis==='mssm' || showBoth){
+      cells += `<td data-label="Rekod MSSM" class="num-cell">${r.mssm_record ?? '&ndash;'}</td>`;
+      cells += `<td data-label="Beza vs MSSM">${deltaCell(r.delta_mssm, r.mssm_sec)}</td>`;
+    }
+    return `<tr>${cells}</tr>`;
+  }).join('');
+}
+
+function render(){
+  const rows = applyFilters();
+  renderSummary(rows);
+  renderGridHeatmap(rows);
+  renderTable(rows);
+}
+
+document.getElementById('f-day').addEventListener('change', e=>{ state.day=e.target.value; render(); });
+document.getElementById('f-gender').addEventListener('change', e=>{ state.gender=e.target.value; render(); });
+document.getElementById('f-age').addEventListener('change', e=>{ state.age=e.target.value; render(); });
+document.getElementById('f-stroke').addEventListener('change', e=>{ state.stroke=e.target.value; render(); });
+document.getElementById('f-name').addEventListener('change', e=>{ state.name=e.target.value; render(); });
+
+document.querySelectorAll('#f-rank .pill').forEach(p=>{
+  p.addEventListener('click', ()=>{
+    document.querySelectorAll('#f-rank .pill').forEach(x=>x.classList.remove('active'));
+    p.classList.add('active');
+    state.rank = p.dataset.val;
+    render();
+  });
+});
+document.querySelectorAll('#f-basis .pill').forEach(p=>{
+  p.addEventListener('click', ()=>{
+    document.querySelectorAll('#f-basis .pill').forEach(x=>x.classList.remove('active'));
+    p.classList.add('active');
+    state.basis = p.dataset.val;
+    render();
+  });
+});
+
+populateNames();
+render();
+</script>
+
+</body>
+</html>
